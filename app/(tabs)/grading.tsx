@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const index = () => {
+const grading = () => {
   return (
     <View>
-      <Text>Index</Text>
+      <Text>grading</Text>
     </View>
   )
 }
 
-export default index
+export default grading
