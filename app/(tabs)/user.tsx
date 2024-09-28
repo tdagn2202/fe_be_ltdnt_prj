@@ -1,11 +1,16 @@
-import { router, useNavigation } from 'expo-router';
+import { router, useNavigation, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useNavigationState } from '@react-navigation/native';
+import { useNavigationState, useRoute } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from 'react-native';
 
 
 
-export default function HomeUser({navigation}) {
+export default function HomeUser({}) {
+    const router = useRouter();
+
+    const goToIndex = () => {
+        router.push('/homeShow');
+    }
     return (
         <View style={styles.container}>
             <View style={styles.container1}>
@@ -78,7 +83,7 @@ export default function HomeUser({navigation}) {
                         <Text style={{fontSize: 18, fontWeight: 'bold', color: '#15539e'}}>Leave University</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.logout}
-                        onPress={() => router.navigate("/")}
+                        onPress={goToIndex}
                     >
                         <Text style={{fontSize: 18, fontWeight: 'bold', color: '#15539e'}}>Log out</Text>
                     </TouchableOpacity>
