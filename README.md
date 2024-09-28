@@ -1,50 +1,49 @@
-# Welcome to your Expo app 👋
+```!!!FOR BACK-END DEVELOPER - PHAM HUU HUNG```
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+```FUNCTIONALITY DOCUMENTATION```
 
-## Get started
+Văn bản này liệt kê vị trí các phím chức năng của giao diện:
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+```1 - LOGIN PAGE: 2 buttons (CHỖ NÀY LÀ TÍNH NĂNG ĐĂNG NHẬP, TRUY VẤN DATABASE)```
+```diff
+1. Login:
+!Link to code: ../app/index.tsx
+- Dòng 34 - 38, nằm trong TouachableOpacity
 
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+2. Sign up for a free account
+!Link to file: ../app/
+- Dòng 47 - 51, nằm trong TouachableOpacity
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+```diff 2 - TABS
+Sau khi click vào nút LOGIN, thì sẽ dẫn tới các files trong thư mục (tabs) (do dùng navigation nên cần chia riêng tụi nó ra một file). 
 
-## Learn more
+Trong đám đó, chỉ quan tâm tới file: user.tsx
 
-To learn more about developing your project with Expo, look at the following resources:
+Trong màn hình User, có các Buttons:
++ Account Setting:
+!Link to file: ../app/(tabs)/user.tsx
+- Dòng 59 - 69, bên trong TouachableOpacity
+-     | --> Change name
+-     | --> Change avatar
++     | --> Change password (chỉ quan tâm button này)
+!Link to file: ../app/userSetting.tsx
+- Dòng 63 - 67, bên trong TouachableOpacity
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
++ Logout (đăng xuất về trang login)
+!Link to file: ../app/(tabs)/user.tsx
+- Chưa code =))))) 
+```
 
-## Join the community
+```diff 3 - CHANGE PASSWORD
+Click vào Change password --> Changing password page
+Trong màn hình changing password có 2 buttons: 
 
-Join our community of developers creating universal apps.
++ Change my password: 
+!Link to file: ../app/changePassword.tsx
+- Dòng 36 - 40, bên trong TouachableOpacity
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
++ Go back
+!Link to file: ../app/changePassword.tsx
+- Dòng 40 - 47, bên trong thẻ View

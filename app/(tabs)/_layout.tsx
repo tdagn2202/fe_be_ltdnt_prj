@@ -7,10 +7,10 @@ const _layout = () => {
     <Tabs
         tabBar={(props) => <TabBar {...props}/>}
     >
-        <Tabs.Screen name="index" options={{title: "Home"}}/>
-        <Tabs.Screen name="grading" options={{title: "Grading"}} />
-        <Tabs.Screen name="notify" options={{title: "Notification"}}/>
-        <Tabs.Screen name="user" options={{title: "User"}}/>
+        <Tabs.Screen name="index" options={{title: "Home", headerShown: false}}/>
+        <Tabs.Screen name="grading" options={{title: "Grading", headerShown: false}} />
+        <Tabs.Screen name="notify" options={{title: "Notification", headerShown: false}}/>
+        <Tabs.Screen name="user" options={{title: "User", headerShown: false}}/>
     </Tabs>
   )
 }
