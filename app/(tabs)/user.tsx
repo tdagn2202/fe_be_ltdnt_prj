@@ -64,6 +64,9 @@ export default function HomeUser({}) {
                         </View>  
                         <Text style={styles.txticon}>Update Information</Text>
                     </TouchableOpacity>
+
+                    {/* CODE FOR ACCOUNT SETTING HERE */}
+
                     <TouchableOpacity style={styles.setting}
                         onPress={() => router.navigate('/userSetting')}
                     >
@@ -75,6 +78,9 @@ export default function HomeUser({}) {
                         </View>
                         <Text style={styles.txticon}>Account setting</Text>
                     </TouchableOpacity>
+
+                    {/* --------------------------------- */}
+
                 </View>
 
                 <View style={styles.detail3}>
@@ -82,11 +88,17 @@ export default function HomeUser({}) {
                     <TouchableOpacity style={styles.leave}>
                         <Text style={{fontSize: 18, fontWeight: 'bold', color: '#15539e'}}>Leave University</Text>
                     </TouchableOpacity>
+
+                    {/* CODE FOR LOG-OUT BUTTON */}
+
                     <TouchableOpacity style={styles.logout}
                         onPress={goToIndex}
                     >
                         <Text style={{fontSize: 18, fontWeight: 'bold', color: '#15539e'}}>Log out</Text>
                     </TouchableOpacity>
+
+                    {/* --------------------------------- */}
+
                 </View>
             </View>
         </View>

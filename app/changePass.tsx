@@ -33,12 +33,19 @@ export default function Register({}) {
                 <TextInput style={styles.containertxt} placeholder='Enter your new password'></TextInput>
                 <TextInput style={styles.containertxt} placeholder='Re-enter your new password'></TextInput>
 
+                {/* CODE FOR CHANGE MY PASSWORD */}
+
                 <TouchableOpacity style={styles.buttonRegister}
                     onPress={() => console.log('Change passowrd button hitted')}
                 >
                     <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17}}>Change my password</Text>
                 </TouchableOpacity>
                 
+                {/* --------------------------------- */}
+
+                
+                {/* CODE FOR GO BACK */}
+
                 <View
                     style = {{top: 15}}>
                     <Button
@@ -47,6 +54,9 @@ export default function Register({}) {
                         onPress={() => router.back()}
                     />
                 </View>
+
+                {/* --------------------------------- */}
+
 
             </View>
         </KeyboardAvoidingView>

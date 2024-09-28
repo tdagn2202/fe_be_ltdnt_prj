@@ -60,11 +60,17 @@ export default function HomeAccount({}) {
                             />
                         </View>
                     </View>
+
+                    {/* CODE FOR CHANGE PASSWORD HERE */}
+
                     <TouchableOpacity style={styles.viewtxt}
                         onPress={() => router.navigate('/changePass')}
                     >
                         <Text style={styles.txticon}>Change password</Text>
                     </TouchableOpacity>
+
+                    {/* --------------------------------- */}
+                    
                 </TouchableOpacity>
             </View>
         </View>

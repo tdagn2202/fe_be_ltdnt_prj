@@ -9,11 +9,11 @@ Văn bản này liệt kê vị trí các phím chức năng của giao diện:
 ```diff
 1. Login:
 !Link to code: ../app/index.tsx
-- Dòng 34 - 38, nằm trong TouachableOpacity
+- Dòng 38 - 42, nằm trong TouachableOpacity
 
 2. Sign up for a free account
 !Link to file: ../app/
-- Dòng 47 - 51, nằm trong TouachableOpacity
+- Dòng 55 - 59, nằm trong TouachableOpacity
 ```
 
 ```diff 2 - TABS
@@ -23,17 +23,17 @@ Trong đám đó, chỉ quan tâm tới file: user.tsx
 
 Trong màn hình User, có các Buttons:
 + Account Setting:
-!Link to file: ../app/(tabs)/user.tsx
-- Dòng 59 - 69, bên trong TouachableOpacity
+!Link to file: ../app/(tabs)/user.tsx (link dẫn tới trang User (mục thứ 4 trong cái navigation á))
+- Dòng 70 - 80, bên trong TouachableOpacity
 -     | --> Change name
 -     | --> Change avatar
 +     | --> Change password (chỉ quan tâm button này)
 !Link to file: ../app/userSetting.tsx
-- Dòng 63 - 67, bên trong TouachableOpacity
+- Dòng 66 - 70, bên trong TouachableOpacity
 
 + Logout (đăng xuất về trang login)
 !Link to file: ../app/(tabs)/user.tsx
-- Chưa code =))))) 
+- Dòng 94 - 98, bên trong TouachableOpacity
 ```
 
 ```diff 3 - CHANGE PASSWORD
@@ -42,8 +42,8 @@ Trong màn hình changing password có 2 buttons:
 
 + Change my password: 
 !Link to file: ../app/changePassword.tsx
-- Dòng 36 - 40, bên trong TouachableOpacity
+- Dòng 38 - 42, bên trong TouachableOpacity
 
 + Go back
 !Link to file: ../app/changePassword.tsx
-- Dòng 40 - 47, bên trong thẻ View
+- Dòng 49 - 56, bên trong thẻ View

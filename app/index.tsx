@@ -33,11 +33,15 @@ export default function Login({  }) {
           <Text style={styles.forgotPass}>I have forgot my password</Text>
         </TouchableOpacity>
 
+        {/* BUTTON LOGIN CODE AREA HERE */}
+
         <TouchableOpacity style={styles.buttonLogin}
           onPress={()=> router.navigate('/(tabs)')}
         >
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>
         </TouchableOpacity>
+
+        {/* --------------------------------- */}
 
         <View style={styles.line}></View>
 
@@ -46,11 +50,17 @@ export default function Login({  }) {
             <Text style={{ color: '#b1b1b1', fontWeight: 'bold', fontSize: 13 }}>New to us?</Text>
           </View>
 
+          {/* CODE FOR SIGN UP FOR A NEW ACCOUNT AREA  */}
+
           <TouchableOpacity style={{ marginBottom: 30 }}
             onPress={()=> router.navigate('/register')}
           >
             <Text style={{ color: '#779dca', fontWeight: 'bold', fontSize: 15, textDecorationLine: 'underline' }}>Sign up a free account</Text>
           </TouchableOpacity>
+
+          {/* --------------------------------- */}
+          
+
         </View>
       </View>
     </KeyboardAvoidingView>
