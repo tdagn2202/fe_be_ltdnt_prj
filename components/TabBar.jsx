@@ -9,6 +9,7 @@ export default function MyTabBar({ state, descriptors, navigation }) {
     grading: (props) => <Ionicons name="school-outline" size={26} color="grey" {...props}/>,
     notify: (props) => <Ionicons name="notifications-outline" size={26} color="grey" {...props}/>,
     user: (props) => <Feather name="user" size={24} color="grey" {...props}/>,
+
   }
 
   const primaryColor = '#12469a'
@@ -24,7 +25,7 @@ export default function MyTabBar({ state, descriptors, navigation }) {
             ? options.title
             : route.name;
 
-        console.log(route.name)
+        // console.log(route.name)
         const isFocused = state.index === index;
 
         const onPress = () => {

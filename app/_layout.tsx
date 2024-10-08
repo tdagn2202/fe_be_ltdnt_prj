@@ -30,11 +30,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack initialRouteName ="index">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name = "index" options={{headerShown:false}}/>
         <Stack.Screen name = "register" options={{headerShown:false}}/>
+        <Stack.Screen name = "index" options={{headerShown:false}}/>
         <Stack.Screen name = "changePass" options={{headerShown:false}}/>
         <Stack.Screen name = "userSetting" options={{headerShown:false}}/>
         <Stack.Screen name = "homeShow" options={{headerShown:false}}/>
+        
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>

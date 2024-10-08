@@ -2,15 +2,69 @@ import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Button, StyleSheet, Text, View, Image, ImageBackground, TextInput, Touchable, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import ToastNotification from './toastNotification';
+import { useState } from 'react';
+import axios from 'axios';
+import { createIconSetFromFontello } from '@expo/vector-icons';
 
 export default function Login({  }) {
   const navigation = useNavigation();
+  const [showNotify, setshowNotify] = useState(false)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const loginAPI = 'http://10.13.128.154:5000/api/student/login'
+  const getAccountAPI = 'http://10.13.128.154:5000/api/student/'
+  const notifyStyle = "ABC"
+  const notifyContext = "XYZ"
+  const NaviHome = () => {
+    router.navigate('/(tabs)')
+  }
+
+
+  const handleLogin = async () => { 
+    if(!username || !password){
+      console.log('Empty username or password')
+    } else {
+
+    
+    console.log(`Logged in with ${username}, ${password}`);
+    
+    try {
+      const res = await axios.post(loginAPI, { username, password });
+      NaviHome();
+      console.log(`Successfully logged in`)
+      
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          setshowNotify(!showNotify);
+          const status = err.response.status;
+          
+          switch (status) {
+            case 404:
+              console.log('User not found');
+              break;
+            case 401:
+              console.log('Incorrect username or password');
+              break;
+            default:
+              console.log('nothing');
+              break;
+          }
+        }
+      }
+    }
+  }
+  };
+  
+
   return (
     <KeyboardAvoidingView style={styles.container}
       behavior='padding'
       enabled={Platform.OS === 'ios'}
       keyboardVerticalOffset={10}
     >
+      
       <View style={styles.container1}>
         <ImageBackground
           style={styles.image1}
@@ -26,8 +80,19 @@ export default function Login({  }) {
       <View style={styles.container2}>
 
         <Text style={styles.text2}>LOGIN</Text>
-        <TextInput style={styles.containertxt} placeholder='Enter your username' placeholderTextColor={'#d4d4d4'}/>
-        <TextInput style={styles.containertxt} placeholder='Enter your password' placeholderTextColor={'#d4d4d4'}/>
+        <TextInput 
+            style={styles.containertxt} 
+            placeholder='Enter your username' 
+            placeholderTextColor={'#d4d4d4'}
+            onChangeText = {(text)=> setUsername(text)
+            }/>
+        <TextInput 
+          style={styles.containertxt} 
+          placeholder='Enter your password' 
+          placeholderTextColor={'#d4d4d4'}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={true}
+        />
         
         <TouchableOpacity style={{ marginBottom: 30 }}>
           <Text style={styles.forgotPass}>I have forgot my password</Text>
@@ -36,11 +101,17 @@ export default function Login({  }) {
         {/* BUTTON LOGIN CODE AREA HERE */}
 
         <TouchableOpacity style={styles.buttonLogin}
-          onPress={()=> router.navigate('/(tabs)')}
+          // onPress={()=> router.navigate('/(tabs)')}
+          onPress = {()=> handleLogin()}
         >
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>
         </TouchableOpacity>
-
+        {
+          showNotify && <ToastNotification />
+        }
+        {/* {showNotify && 
+            <ToastNotification notifyStyle="Chấm hỏi" notifyContext="Mày Negav hả gì mà quên acc sinh viên?" />
+        } */}
         {/* --------------------------------- */}
 
         <View style={styles.line}></View>
