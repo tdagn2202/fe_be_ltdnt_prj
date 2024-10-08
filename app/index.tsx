@@ -38,6 +38,11 @@ export default function Login({  }) {
       if (axios.isAxiosError(err)) {
         if (err.response) {
           setshowNotify(!showNotify);
+
+          setTimeout(() => {
+            setshowNotify(false)
+          }, 1000);
+
           const status = err.response.status;
           
           switch (status) {
@@ -107,7 +112,7 @@ export default function Login({  }) {
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>
         </TouchableOpacity>
         {
-          showNotify && <ToastNotification />
+          showNotify && <ToastNotification icon= 'question' notifyStyle='Login failed' notifyContext='Negav ha?'/>
         }
         {/* {showNotify && 
             <ToastNotification notifyStyle="Chấm hỏi" notifyContext="Mày Negav hả gì mà quên acc sinh viên?" />
