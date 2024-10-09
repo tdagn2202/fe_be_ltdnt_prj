@@ -1,3 +1,4 @@
+
 CREATE DATABASE Student_Management
 GO
 USE Student_Management
@@ -10,7 +11,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Students (
     UserID INT NOT NULL IDENTITY(1,1) FOREIGN KEY REFERENCES Users(UserID),
-    StudentID INT PRIMARY KEY,
+    StudentID VARCHAR(20) PRIMARY KEY,
     Name NVARCHAR(100) NOT NULL,
     Age INT NOT NULL,
     Email NVARCHAR(100) NOT NULL UNIQUE,
@@ -20,7 +21,7 @@ CREATE TABLE Students (
 
 CREATE TABLE Grades (
     GradeID INT PRIMARY KEY IDENTITY(1,1),
-    StudentID INT NOT NULL FOREIGN KEY REFERENCES Students(StudentID),
+    StudentID VARCHAR(20) NOT NULL FOREIGN KEY REFERENCES Students(StudentID),
     Course NVARCHAR(100) NOT NULL,
     Grade CHAR(2), -- Example: 'A', 'B+', etc.
     DateAssigned DATE
@@ -29,7 +30,7 @@ CREATE TABLE Grades (
 
 CREATE TABLE Schedules (
     ScheduleID INT PRIMARY KEY IDENTITY(1,1),
-    StudentID INT NOT NULL FOREIGN KEY REFERENCES Students(StudentID),
+    StudentID VARCHAR(20) NOT NULL FOREIGN KEY REFERENCES Students(StudentID),
     Course NVARCHAR(100) NOT NULL,
     DayOfWeek NVARCHAR(10), -- Example: 'Monday', 'Tuesday'
     StartTime TIME,
