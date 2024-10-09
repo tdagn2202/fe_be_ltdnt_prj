@@ -1,6 +1,5 @@
 CREATE DATABASE Student_Management
 GO
-GO
 USE Student_Management
 
 CREATE TABLE Users (
