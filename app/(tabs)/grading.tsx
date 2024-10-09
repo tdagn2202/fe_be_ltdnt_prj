@@ -1,16 +1,29 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput } from 'react-native'
 import React from 'react'
 
+
+
+
 const grading = () => {
+
   return (
     <View style = {{backgroundColor: 'white', flex:1, alignItems: 'center', justifyContent: 'center'}}>
-      <View style = {{height: 30, width: '25%', backgroundColor:'#12469a', borderRadius: 40, alignItems: 'center',
+      <TouchableOpacity style = {{height: 30, width: '25%', backgroundColor:'#12469a', borderRadius: 40, alignItems: 'center',
         justifyContent: 'center'
-      }}>
+      }}
+        onPress={()=> {}}
+      
+      >
         <Text style = {{
           color: 'white', fontSize: 15, fontWeight: 'bold'
         }}>GRADING</Text>
-      </View>
+      </TouchableOpacity>
+      <TextInput
+        placeholder='Input Student code'
+        style ={{}}
+      >
+
+      </TextInput>
     </View>
   )
 }
