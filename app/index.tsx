@@ -6,14 +6,14 @@ import ToastNotification from './toastNotification';
 import { useState } from 'react';
 import axios from 'axios';
 import { createIconSetFromFontello } from '@expo/vector-icons';
-
+var IP = require('./ipAdress')
 export default function Login({  }) {
   const navigation = useNavigation();
   const [showNotify, setshowNotify] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const loginAPI = 'http://10.13.128.28:5000/api/student/login'
-  const getAccountAPI = 'http://10.13.128.28:5000/api/student/'
+  const loginAPI = `http://${IP.ipAddress}:5000/api/student/login`
+  const getAccountAPI = `http://${IP.ipAddress}:5000/api/student/`
   const notifyStyle = "ABC"
   const notifyContext = "XYZ"
   const NaviHome = () => {
