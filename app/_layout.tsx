@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { View, Text } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
-
-
+import { UserProvider } from './UserContext'
+import Login from './index'
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -29,17 +29,22 @@ export default function RootLayout() {
   }
 
   return (
+
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack initialRouteName ="index">
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name = "register" options={{headerShown:false}}/>
-        <Stack.Screen name = "index" options={{headerShown:false}}/>
-        <Stack.Screen name = "changePass" options={{headerShown:false}}/>
-        <Stack.Screen name = "userSetting" options={{headerShown:false}}/>
-        <Stack.Screen name = "homeShow" options={{headerShown:false}}/>
-        
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <UserProvider>
+
+        <Stack initialRouteName="index">
+
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="register" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="changePass" options={{ headerShown: false }} />
+          <Stack.Screen name="userSetting" options={{ headerShown: false }} />
+          <Stack.Screen name="homeShow" options={{ headerShown: false }} />
+
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </UserProvider>
     </ThemeProvider>
   );
 }

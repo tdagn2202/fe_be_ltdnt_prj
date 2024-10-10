@@ -6,21 +6,26 @@ import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import ToastNotification from './toastNotification'
 import axios from 'axios';
-const signUpAPI = 'http://10.13.132.217:5000/api/student/signup'
+const signUpAPI = 'http://192.168.1.2:5000/api/student/signup'
 export default function Register({ }) {
     const [isDisabled, setDisabled] = useState(true)
     const [isSelected, setSelection] = useState(false);
     const [signUpUserName, setSignUpUserName] = useState('')
     const [signUpPassword, setSignUpPassword] = useState('')
+    const [checkPass, setCheckPass] = useState('')
     const [signUpEmail, setSignUpEmail] = useState('')
     const [showNotify, setshowNotify] = useState(false)
     const NaviLogin = () => {
         router.navigate('/homeShow')
     }
     const signUpHandler = async () => {
-        if (!signUpUserName || !signUpPassword || !signUpEmail) {
+        if (!signUpUserName || !signUpPassword || !signUpEmail || !checkPass) {
             alert('Missing information?')
-        } else {
+        } 
+        else if(signUpPassword !== checkPass){
+            alert(`The password and the confirm password do not match`)
+        } 
+        else {
             console.log(`Signing up with: ${signUpUserName}, ${signUpPassword}, ${signUpEmail}`)
             try {
                 const res = await axios.post(signUpAPI, {
@@ -31,12 +36,12 @@ export default function Register({ }) {
 
                 setTimeout(() => {
                     NaviLogin()
-                }, 2000);
+                }, 1000);
 
                 console.log('ABC')
                 setTimeout(() => {
                     setshowNotify(false)
-                }, 2000);
+                }, 500);
 
             } catch (err: unknown) {
                 if (axios.isAxiosError(err)) {
@@ -70,7 +75,7 @@ export default function Register({ }) {
         <KeyboardAvoidingView style={styles.container}
             behavior="padding"
             enabled
-            keyboardVerticalOffset={10}
+            keyboardVerticalOffset={-175}
         >
             <View style={styles.container1}>
                 <ImageBackground
@@ -103,8 +108,8 @@ export default function Register({ }) {
                     style={styles.containertxt}
                     placeholder='Re-enter password'
                     placeholderTextColor={'grey'}
-                    value={signUpPassword}
-                    onChangeText={setSignUpPassword}
+                    value={checkPass}
+                    onChangeText={setCheckPass}
                     secureTextEntry={true}
                 />
                 <TextInput

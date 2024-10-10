@@ -3,91 +3,83 @@ import { router, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Button, StyleSheet, Text, View, Image, ImageBackground, TextInput, Touchable, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import ToastNotification from './toastNotification';
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext } from 'react';
 import axios from 'axios';
 import { createIconSetFromFontello } from '@expo/vector-icons';
+import { useUser } from './UserContext';
 
-// 192.168.1.2
 
-interface userContextType {
-  userName: string | null
-  setUserName: (userName: string) => void;
-}
 
-const 
-
-export default function Login({  }) {
+export default function Login({ }) {
   const navigation = useNavigation();
   const [showNotify, setshowNotify] = useState(false)
-  const [username, setUsername] = useState('')
+  // const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const loginAPI = 'http://10.13.132.217:5000/api/student/login'
-  const getAccountAPI = 'http://10.13.132.217:5000/api/student/'
+  const loginAPI = 'http://192.168.1.2:5000/api/student/login'
+  const getAccountAPI = 'http://192.168.1.2:5000/api/student/'
   const notifyStyle = "ABC"
   const notifyContext = "XYZ"
+  const { username, setUsername } = useUser();
+
   const NaviHome = () => {
-    // router.navigate('/(tabs)',)
+    console.log(username)
     router.push({
       pathname: '/(tabs)/',
-      params: {username}
+      params: { username }
     })
   }
 
 
-  const handleLogin = async () => { 
-    if(!username || !password){
+  const handleLogin = async () => {
+    if (!username || !password) {
       console.log('Empty username or password')
     } else {
 
-    
-    console.log(`Logged inawith ${username}, ${password}`);
-    
-    try {
-      const res = await axios.post(loginAPI, { username, password });
-      NaviHome();
-      console.log(`Successfully logged in`)
-      
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        if (err.response) {
-          setshowNotify(!showNotify);
 
-          setTimeout(() => {
-            setshowNotify(false)
-          }, 1000);
+      console.log(`Logged inawith ${username}, ${password}`);
 
-          const status = err.response.status;
-          
-          switch (status) {
-            case 404:
-              console.log('User not found');
-              break;
-            case 401:
-              console.log('Incorrect username or password');
-              break;
-            default:
-              console.log('nothing');
-              break;
+      try {
+        const res = await axios.post(loginAPI, { username, password });
+        NaviHome();
+        console.log(`Successfully logged in`)
+
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          if (err.response) {
+            setshowNotify(!showNotify);
+
+            setTimeout(() => {
+              setshowNotify(false)
+            }, 1000);
+
+            const status = err.response.status;
+
+            switch (status) {
+              case 404:
+                console.log('User not found');
+                break;
+              case 401:
+                console.log('Incorrect username or password');
+                break;
+              default:
+                console.log('nothing');
+                break;
+            }
           }
         }
       }
     }
-  }
   };
-  
+
 
   return (
-    <KeyboardAvoidingView style={styles.container}
-      behavior='padding'
-      enabled={Platform.OS === 'ios'}
-      keyboardVerticalOffset={10}
-    >
-      
+    <View style={styles.container}>
+
       <View style={styles.container1}>
         <ImageBackground
           style={styles.image1}
           // source={require("../data/General/background_banner.png")}
-            source={require("../assets/images/background_banner.png")}
+          source={require("../assets/images/background_banner.png")}
         >
           <Text style={styles.text1}>       STUDENT
             MANAGEMENT
@@ -98,20 +90,20 @@ export default function Login({  }) {
       <View style={styles.container2}>
 
         <Text style={styles.text2}>LOGIN</Text>
-        <TextInput 
-            style={styles.containertxt} 
-            placeholder='Enter your username' 
-            placeholderTextColor={'#d4d4d4'}
-            onChangeText = {(text)=> setUsername(text)
-            }/>
-        <TextInput 
-          style={styles.containertxt} 
-          placeholder='Enter your password' 
+        <TextInput
+          style={styles.containertxt}
+          placeholder='Enter your username'
+          placeholderTextColor={'#d4d4d4'}
+          onChangeText={(text) => setUsername(text)
+          } />
+        <TextInput
+          style={styles.containertxt}
+          placeholder='Enter your password'
           placeholderTextColor={'#d4d4d4'}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
         />
-        
+
         <TouchableOpacity style={{ marginBottom: 30 }}>
           <Text style={styles.forgotPass}>I have forgot my password</Text>
         </TouchableOpacity>
@@ -120,12 +112,12 @@ export default function Login({  }) {
 
         <TouchableOpacity style={styles.buttonLogin}
           // onPress={()=> router.navigate('/(tabs)')}
-          onPress = {()=> handleLogin()}
+          onPress={() => handleLogin()}
         >
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>
         </TouchableOpacity>
         {
-          showNotify && <ToastNotification icon= 'question' notifyStyle='Login failed' notifyContext='Negav ha?'/>
+          showNotify && <ToastNotification icon='question' notifyStyle='Login failed' notifyContext='Negav ha?' />
         }
         {/* {showNotify && 
             <ToastNotification notifyStyle="Chấm hỏi" notifyContext="Mày Negav hả gì mà quên acc sinh viên?" />
@@ -134,7 +126,7 @@ export default function Login({  }) {
 
         <View style={styles.line}></View>
 
-        <View style = {{alignItems: 'center', bottom: 25,}}>
+        <View style={{ alignItems: 'center', bottom: 25, }}>
           <View style={{ marginTop: 200 }}>
             <Text style={{ color: '#b1b1b1', fontWeight: 'bold', fontSize: 13 }}>New to us?</Text>
           </View>
@@ -142,17 +134,17 @@ export default function Login({  }) {
           {/* CODE FOR SIGN UP FOR A NEW ACCOUNT AREA  */}
 
           <TouchableOpacity style={{ marginBottom: 30 }}
-            onPress={()=> router.navigate('/register')}
+            onPress={() => router.navigate('/register')}
           >
             <Text style={{ color: '#779dca', fontWeight: 'bold', fontSize: 15, textDecorationLine: 'underline' }}>Sign up a free account</Text>
           </TouchableOpacity>
 
           {/* --------------------------------- */}
-          
+
 
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
