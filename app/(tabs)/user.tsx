@@ -1,15 +1,33 @@
-import { router, useNavigation, useRouter } from 'expo-router';
+import { router, useNavigation, useRouter, useLocalSearchParams  } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigationState, useRoute } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import axios from 'axios';
 
 
 
-export default function HomeUser({}) {
+
+export default function HomeUser() {
     const router = useRouter();
 
     const goToIndex = () => {
         router.push('/homeShow');
+    }
+
+    const {username} = useLocalSearchParams()
+
+    const deleteAccount = () =>{
+        axios.delete(`http://10.13.132.217:5000/api/student/dropOut`, {
+            params: { Username: username }
+        })
+            .then(response => {
+                // goToIndex()
+                console.log('Da xoa tai khoan')
+                console.log(username)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
     return (
         <View style={styles.container}>
@@ -85,8 +103,8 @@ export default function HomeUser({}) {
 
                 <View style={styles.detail3}>
                     <Text style={{color: '#b1b1b1'}}>feeling pressure?</Text>
-                    <TouchableOpacity style={styles.leave}>
-                        <Text style={{fontSize: 18, fontWeight: 'bold', color: '#15539e'}}>Leave University</Text>
+                    <TouchableOpacity style={styles.leave} onPress={deleteAccount}>
+                        <Text style={{fontSize: 18, fontWeight: 'bold', color: '#15539e'} }>Leave University</Text>
                     </TouchableOpacity>
 
                     {/* CODE FOR LOG-OUT BUTTON */}

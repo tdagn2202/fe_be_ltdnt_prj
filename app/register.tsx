@@ -1,34 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import { Button, StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 // import CheckBox from 'react-native-check-box';
 import CheckBox from 'expo-checkbox';
 import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import ToastNotification from './toastNotification'
 import axios from 'axios';
-const signUpAPI = 'http://10.13.128.28:5000/api/student/signup'
+const signUpAPI = 'http://10.13.132.217:5000/api/student/signup'
 export default function Register({ }) {
     const [isDisabled, setDisabled] = useState(true)
     const [isSelected, setSelection] = useState(false);
     const [signUpUserName, setSignUpUserName] = useState('')
     const [signUpPassword, setSignUpPassword] = useState('')
     const [signUpEmail, setSignUpEmail] = useState('')
-    const [confirmEmail, setConfirmEmail] = useState('')
     const [showNotify, setshowNotify] = useState(false)
     const NaviLogin = () => {
         router.navigate('/homeShow')
-      }
-    const signUpHandler = async () => { 
-        if(!signUpUserName || !signUpPassword || !signUpEmail || !confirmEmail){
-            console.log('Missing information?')
+    }
+    const signUpHandler = async () => {
+        if (!signUpUserName || !signUpPassword || !signUpEmail) {
+            alert('Missing information?')
         } else {
             console.log(`Signing up with: ${signUpUserName}, ${signUpPassword}, ${signUpEmail}`)
             try {
                 const res = await axios.post(signUpAPI, {
-                    username: signUpUserName, 
-                    password: signUpPassword})
+                    Username: signUpUserName,
+                    Password: signUpPassword
+                })
                 setshowNotify(true)
-                
+
                 setTimeout(() => {
                     NaviLogin()
                 }, 2000);
@@ -39,16 +39,16 @@ export default function Register({ }) {
                 }, 2000);
 
             } catch (err: unknown) {
-                if(axios.isAxiosError(err)){
-                    if(err.response){
+                if (axios.isAxiosError(err)) {
+                    if (err.response) {
                         const status = err.response.status;
 
-                        switch (status){
+                        switch (status) {
                             case 401: {
                                 console.log('Unknow failure')
                                 break;
                             }
-                            default: 
+                            default:
                                 console.log('Server error')
                                 break;
                         }
@@ -68,7 +68,7 @@ export default function Register({ }) {
 
     return (
         <KeyboardAvoidingView style={styles.container}
-            behavior= "padding"
+            behavior="padding"
             enabled
             keyboardVerticalOffset={10}
         >
@@ -85,35 +85,40 @@ export default function Register({ }) {
 
             <View style={styles.container2}>
                 <Text style={styles.text2}>CREATE A NEW ACCOUNT</Text>
-                <TextInput 
-                    style={styles.containertxt} 
-                    placeholder='Enter your username' 
+                <TextInput
+                    style={styles.containertxt}
+                    placeholder='Enter your username'
                     placeholderTextColor={'grey'}
-                    onChangeText={(text) => setSignUpUserName(text)}
-                    />
-                <TextInput 
-                    style={styles.containertxt} 
-                    placeholder='Enter your password' 
+                    onChangeText={setSignUpUserName}
+                />
+                <TextInput
+                    style={styles.containertxt}
+                    placeholder='Enter your password'
                     placeholderTextColor={'grey'}
-                    onChangeText={(text) => setSignUpPassword(text)}
-                    />
-                <TextInput 
-                    style={styles.containertxt} 
-                    placeholder='Enter your email' 
+                    value={signUpPassword}
+                    onChangeText={setSignUpPassword}
+                    secureTextEntry={true}
+                />
+                <TextInput
+                    style={styles.containertxt}
+                    placeholder='Re-enter password'
+                    placeholderTextColor={'grey'}
+                    value={signUpPassword}
+                    onChangeText={setSignUpPassword}
+                    secureTextEntry={true}
+                />
+                <TextInput
+                    style={styles.containertxt}
+                    placeholder='Enter your email'
                     placeholderTextColor={'grey'}
                     onChangeText={(text) => setSignUpEmail(text)}
-                    />
-                <TextInput 
-                    style={styles.containertxt} 
-                    placeholder='Re-enter your email' 
-                    placeholderTextColor={'grey'}
-                    onChangeText={(text)=> setConfirmEmail(text)}
-                    />
+                />
+
 
                 <View style={styles.checkboxContainer}>
                     <CheckBox
                         value={isSelected}
-                        onValueChange={()=>setSelection(!isSelected)}
+                        onValueChange={() => setSelection(!isSelected)}
                         style={styles.checkbox}
                         color={'#12469a'}
                     />
@@ -125,13 +130,13 @@ export default function Register({ }) {
                     onPress={() => signUpHandler()}
                     disabled={isDisabled}
                 >
-                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Register</Text>
-            </TouchableOpacity>
-            {
-                showNotify && (
-                    <ToastNotification icon = 'checkcircleo' notifyStyle='Sucessfully' notifyContext='Tạo tài khoản thành công'/>
-                )
-            }
+                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Register</Text>
+                </TouchableOpacity>
+                {
+                    showNotify && (
+                        <ToastNotification icon='checkcircleo' notifyStyle='Sucessfully' notifyContext='Tạo tài khoản thành công' />
+                    )
+                }
 
             </View>
         </KeyboardAvoidingView>

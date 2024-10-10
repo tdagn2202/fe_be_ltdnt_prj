@@ -1,23 +1,36 @@
 import { useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Button, StyleSheet, Text, View, Image, ImageBackground, TextInput, Touchable, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import ToastNotification from './toastNotification';
-import { useState } from 'react';
+import { useState, createContext, useContext } from 'react';
 import axios from 'axios';
 import { createIconSetFromFontello } from '@expo/vector-icons';
+
+// 192.168.1.2
+
+interface userContextType {
+  userName: string | null
+  setUserName: (userName: string) => void;
+}
+
+const 
 
 export default function Login({  }) {
   const navigation = useNavigation();
   const [showNotify, setshowNotify] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const loginAPI = 'http://10.13.128.28:5000/api/student/login'
-  const getAccountAPI = 'http://10.13.128.28:5000/api/student/'
+  const loginAPI = 'http://10.13.132.217:5000/api/student/login'
+  const getAccountAPI = 'http://10.13.132.217:5000/api/student/'
   const notifyStyle = "ABC"
   const notifyContext = "XYZ"
   const NaviHome = () => {
-    router.navigate('/(tabs)')
+    // router.navigate('/(tabs)',)
+    router.push({
+      pathname: '/(tabs)/',
+      params: {username}
+    })
   }
 
 
@@ -27,7 +40,7 @@ export default function Login({  }) {
     } else {
 
     
-    console.log(`Logged in with ${username}, ${password}`);
+    console.log(`Logged inawith ${username}, ${password}`);
     
     try {
       const res = await axios.post(loginAPI, { username, password });
