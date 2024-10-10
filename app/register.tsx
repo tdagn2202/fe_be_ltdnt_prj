@@ -15,12 +15,18 @@ export default function Register({ }) {
     const [signUpEmail, setSignUpEmail] = useState('')
     const [confirmEmail, setConfirmEmail] = useState('')
     const [showNotify, setshowNotify] = useState(false)
+    const [showNotify2, setshowNotify2] = useState(false)
     const NaviLogin = () => {
         router.navigate('/homeShow')
       }
     const signUpHandler = async () => { 
         if(!signUpUserName || !signUpPassword || !signUpEmail || !confirmEmail){
             console.log('Missing information?')
+            setshowNotify2(true)
+
+            setTimeout(() => {
+                setshowNotify2(false)
+            }, 3000);
         } else {
             console.log(`Signing up with: ${signUpUserName}, ${signUpPassword}, ${signUpEmail}`)
             try {
@@ -132,6 +138,9 @@ export default function Register({ }) {
                     <ToastNotification icon = 'checkcircleo' notifyStyle='Sucessfully' notifyContext='Tạo tài khoản thành công'/>
                 )
             }
+            {
+                showNotify2 && <ToastNotification icon = 'question' notifyStyle='Lỗi' notifyContext='Thông tin không được để trống'/>
+            }   
 
             </View>
         </KeyboardAvoidingView>

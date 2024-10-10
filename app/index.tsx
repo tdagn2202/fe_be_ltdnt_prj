@@ -6,16 +6,20 @@ import ToastNotification from './toastNotification';
 import { useState } from 'react';
 import axios from 'axios';
 import { createIconSetFromFontello } from '@expo/vector-icons';
-var IP = require('./ipAdress')
+import Entypo from '@expo/vector-icons/Entypo';
+var IP = require('../ipAddress')
+import Feather from '@expo/vector-icons/Feather';
 export default function Login({  }) {
   const navigation = useNavigation();
   const [showNotify, setshowNotify] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [hide, setHide] = useState(true)
   const loginAPI = `http://${IP.ipAddress}:5000/api/student/login`
   const getAccountAPI = `http://${IP.ipAddress}:5000/api/student/`
   const notifyStyle = "ABC"
   const notifyContext = "XYZ"
+  
   const NaviHome = () => {
     router.navigate('/(tabs)')
   }
@@ -91,14 +95,32 @@ export default function Login({  }) {
             placeholderTextColor={'#d4d4d4'}
             onChangeText = {(text)=> setUsername(text)
             }/>
-        <TextInput 
-          style={styles.containertxt} 
-          placeholder='Enter your password' 
-          placeholderTextColor={'#d4d4d4'}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry={true}
-        />
-        
+
+          <TextInput 
+            style={styles.containertxt} 
+            placeholder='Enter your password' 
+            placeholderTextColor={'#d4d4d4'}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry={hide}
+          />
+          {/* <TouchableOpacity>
+            <View style = {{position: 'absolute', bottom: 17, left: 110}}>
+              <Feather name="eye" size={19} color="grey" />
+            </View>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+                        style={
+                          {
+                            bottom: 37,
+                            left: 120,
+                          }
+                        }
+                        onPress={() => {
+                            setHide(!hide)
+                        }}
+                    >
+                        <Text>{hide ? <Feather name="eye" size={20} color="grey" /> : <Feather name="eye-off" size={20} color="grey" />}</Text>
+                    </TouchableOpacity>
         <TouchableOpacity style={{ marginBottom: 30 }}>
           <Text style={styles.forgotPass}>I have forgot my password</Text>
         </TouchableOpacity>
