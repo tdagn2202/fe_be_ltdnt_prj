@@ -128,8 +128,8 @@ export default function Login({  }) {
         {/* BUTTON LOGIN CODE AREA HERE */}
 
         <TouchableOpacity style={styles.buttonLogin}
-          // onPress={()=> router.navigate('/(tabs)')}
-          onPress = {()=> handleLogin()}
+          onPress={()=> router.navigate('/(tabs)')}
+          // onPress = {()=> handleLogin()}
         >
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>
         </TouchableOpacity>
