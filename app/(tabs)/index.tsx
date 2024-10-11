@@ -1,9 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { useState, useRef, useEffect } from 'react';
+import { Button, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Modal, Animated } from 'react-native';
+import Fontisto from '@expo/vector-icons/Fontisto';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo';
 
 export default function Home() {
     const [modalVisible, setModalVisible] = useState(false);
+    const fadeAnim = useRef(new Animated.Value(0)).current; // Initial opacity for background
+    const fadeAnim2 = useRef (new Animated.Value(1)).current; //)
+    useEffect(() => {
+        if (modalVisible) {
+            Animated.timing(fadeAnim, {
+                toValue: 1,  // fade in
+                duration: 1300,
+                useNativeDriver: true
+            }).start();
+        } else {
+            Animated.timing(fadeAnim2, {
+                toValue: 0,  // fade out
+                duration: 3000,
+                useNativeDriver: true
+            }).start();
+        }
+    }, [modalVisible]);
 
     return (
         <View style={styles.container}>
@@ -41,15 +62,50 @@ export default function Home() {
                             <Modal
                                 visible={modalVisible}
                                 animationType='slide'
-                                transparent={true} // To make background semi-transparent
+                                transparent={true} 
                                 onRequestClose={() => {
                                     setModalVisible(false);
                                 }}
                             >
+                                {/* Animated background for fade effect */}
+                                <Animated.View style={[styles.modalBackground, { opacity: fadeAnim }]} />
+                                
                                 <View style={styles.modalContainer}>
                                     <View style={styles.modalContent}>
-                                        <Text style={styles.modalTitle}>Schedule Details</Text>
-                                        <Button title="Close Modal" onPress={() => setModalVisible(false)} />
+                                        <Text style={styles.modalTitle}>Chi tiết thời khóa biểu</Text>
+                                        <View style ={{top: -9}}>
+                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
+                                                <AntDesign name="book" size={17} color="white" style ={{right: 2}} />
+                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Môn học:</Text>
+                                            </View>
+                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 80}]}>
+                                                <MaterialCommunityIcons name="calendar-week-begin" size={17} color="white" style ={{right: 3}} />
+                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Ngày:</Text>
+                                            </View>
+                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
+                                                <Fontisto name="clock" size={15} color="white" style ={{right: 3}}/>
+                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Bắt đầu: </Text>
+                                            </View>
+                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
+                                                <Fontisto name="clock" size={15} color="white" style ={{right: 3}}/>
+                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Kết thúc:</Text>
+                                            </View>
+                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 90}]}>
+                                                <Entypo name="location-pin" size={20} color="white" style ={{right: 5}}/>
+                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Phòng:</Text>
+                                            </View>
+                                        </View>
+                                        <TouchableOpacity
+                                            onPress={() => setModalVisible(false)}
+                                        >
+                                            <View style ={{alignItems: 'center'}}>    
+                                                <View style = {styles.modalCancelButton}>
+                                                    <Text style = {{color: 'white', fontWeight: 'bold', fontSize: 15}}>
+                                                        Trở về
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </Modal>
@@ -183,21 +239,46 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         justifyContent: 'flex-end', // Align the modal content at the bottom
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    },
+    modalBackground: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent background
     },
     modalContent: {
-        height: '40%', // Adjust the height as needed
+        height: '45%', // Adjust the height as needed
         backgroundColor: 'white',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        padding: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: 25,
         fontWeight: 'bold',
-        marginBottom: 20,
+        padding: 40,
+        left: 27,
+        bottom: 15
     },
+    modalLessionBadge: {
+        height: 30,
+        width: 90,
+        backgroundColor: '#12469a',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        left: 25,
+        bottom: 20,
+        flexDirection: 'row'
+    }, 
+    modalCancelButton : {
+        backgroundColor: '#12469a',
+        borderRadius: 15,
+        height: 30,
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20
+    }
 });
-
