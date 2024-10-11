@@ -6,7 +6,8 @@ import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import ToastNotification from './toastNotification'
 import axios from 'axios';
-const signUpAPI = 'http://10.13.132.103:5000/api/student/signup'
+var IP = require('../ipAddress')
+const signUpAPI = `http://${IP.ipAddress}:5000/api/student/signup`
 export default function Register({ }) {
     const [isDisabled, setDisabled] = useState(true)
     const [isSelected, setSelection] = useState(false);

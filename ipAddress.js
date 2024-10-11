@@ -1,5 +1,5 @@
 const IP = {
-    ipAddress: '192.168.1.5'
+    ipAddress: '10.13.129.162'
 }
 
 module.exports = IP;

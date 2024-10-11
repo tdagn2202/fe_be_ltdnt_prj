@@ -74,25 +74,60 @@ export default function Home() {
                                     <View style={styles.modalContent}>
                                         <Text style={styles.modalTitle}>Chi tiết thời khóa biểu</Text>
                                         <View style ={{top: -9}}>
-                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
-                                                <AntDesign name="book" size={17} color="white" style ={{right: 2}} />
-                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Môn học:</Text>
+                                            <View style = {{flexDirection: 'row'}}>
+                                                <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
+                                                    <AntDesign name="book" size={17} color="white" style ={{right: 2}} />
+                                                    <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Môn học:</Text>
+                                                </View>
+                                                <View>
+                                                    <Text style ={{bottom: 7, left: 40, fontSize: 15}}>
+                                                        Lập trình di động đa nền tảng
+                                                    </Text>
+                                                </View>
                                             </View>
-                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 80}]}>
-                                                <MaterialCommunityIcons name="calendar-week-begin" size={17} color="white" style ={{right: 3}} />
-                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Ngày:</Text>
+                                            <View style = {{flexDirection: 'row'}}>
+                                                <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 80}]}>
+                                                    <MaterialCommunityIcons name="calendar-week-begin" size={17} color="white" style ={{right: 3}} />
+                                                    <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Ngày:</Text>
+                                                </View>
+                                                <View>
+                                                    <Text style ={{bottom: 7, left: 40, fontSize: 15}}>
+                                                        Thứ 4
+                                                    </Text>
+                                                </View>
                                             </View>
-                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
-                                                <Fontisto name="clock" size={15} color="white" style ={{right: 3}}/>
-                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Bắt đầu: </Text>
+                                            <View style = {{flexDirection: 'row'}}>
+                                                <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
+                                                    <Fontisto name="clock" size={15} color="white" style ={{right: 3}}/>
+                                                    <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Bắt đầu: </Text>
+                                                </View>
+                                                <View>
+                                                    <Text style ={{bottom: 7, left: 40, fontSize: 15}}>
+                                                        13:30
+                                                    </Text>
+                                                </View>
                                             </View>
-                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
-                                                <Fontisto name="clock" size={15} color="white" style ={{right: 3}}/>
-                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Kết thúc:</Text>
+                                            <View style = {{flexDirection: 'row'}}>
+                                                <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
+                                                    <Fontisto name="clock" size={15} color="white" style ={{right: 3}}/>
+                                                    <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Kết thúc:</Text>
+                                                </View>
+                                                <View>
+                                                    <Text style ={{bottom: 7, left: 40, fontSize: 15}}>
+                                                        16:10
+                                                    </Text>
+                                                </View>
                                             </View>
-                                            <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 90}]}>
-                                                <Entypo name="location-pin" size={20} color="white" style ={{right: 5}}/>
-                                                <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Phòng:</Text>
+                                            <View style = {{flexDirection: 'row'}}>
+                                                <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 90}]}>
+                                                    <Entypo name="location-pin" size={20} color="white" style ={{right: 5}}/>
+                                                    <Text style= {{color: 'white', fontWeight: 'bold', left: 2}}>Phòng:</Text>
+                                                </View>
+                                                <View>
+                                                    <Text style ={{bottom: 7, left: 40, fontSize: 15}}>
+                                                        213/DI
+                                                    </Text>
+                                                </View>
                                             </View>
                                         </View>
                                         <TouchableOpacity

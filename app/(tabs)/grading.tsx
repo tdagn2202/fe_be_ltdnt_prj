@@ -5,24 +5,29 @@ import axios from 'axios';
 var IP = require('../../ipAddress')
 
 const getDataURL = `http://${IP.ipAddress}:5000/api/student`
+const getScheduleURL = `http://${IP.ipAddress}:5000/api/student/getSchedule`
 
 const grading = () => {
   
   const [res, setRes] = useState(undefined)
+  const [btnClicked, setBtnClicked] = useState(false)
+  const [data, setData] = useState('B2203551')
   useEffect(() => {
     getDataHandler();
-  }, []);
+  }, [btnClicked]);
 
   const getDataHandler = async () => {
-      console.log('clicked');
-      await axios.get(getDataURL).then((res) => {
-          return res.data;
-      }).then((data) => {
-        setRes(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+      console.log('accessed');
+      try {
+        const result = await axios.post(getScheduleURL, {
+          Username: data,
+        })
+
+        console.log(JSON.stringify(result.data.schedule))
+      } catch (e) {
+        console.log('error fetching data:', e);
+        return;
+      }
     };
 
   
@@ -33,7 +38,7 @@ const grading = () => {
       <TouchableOpacity style = {{height: 30, width: '25%', backgroundColor:'#12469a', borderRadius: 40, alignItems: 'center',
         justifyContent: 'center'
       }}
-        onPress={()=> {}}
+        onPress={()=> {setBtnClicked(!btnClicked)}}
       
       >
         <Text style = {{
@@ -46,7 +51,7 @@ const grading = () => {
       >
 
       </TextInput>
-      <FlatList 
+      {/* <FlatList 
         data={res}
         renderItem={({item})=> 
           <View style ={{flexDirection: 'row'}}>
@@ -56,7 +61,7 @@ const grading = () => {
         }
       >
 
-      </FlatList>
+      </FlatList> */}
     </ScrollView>
   )
 }
