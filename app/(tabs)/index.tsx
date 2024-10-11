@@ -5,11 +5,21 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
+import axios from 'axios';
+var IP = require('../../ipAddress')
+const getScheduleURL = `http://${IP.ipAddress}:5000/api/student/getSchedule`
+interface ScheduleItem {
+    Course: string;
+    Username: string;
+    DayOfWeek:string;
+  }
 
 export default function Home() {
+    const [res, setRes] = useState<ScheduleItem[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial opacity for background
     const fadeAnim2 = useRef (new Animated.Value(1)).current; //)
+    const [data, setData] = useState('B2203551')
     useEffect(() => {
         if (modalVisible) {
             Animated.timing(fadeAnim, {
@@ -25,6 +35,19 @@ export default function Home() {
             }).start();
         }
     }, [modalVisible]);
+
+    const getDataHandler = async () => {
+        console.log('accessed');
+        
+        axios.post(getScheduleURL, {
+          Username: data,
+        }).then((response) => {
+          setRes(response.data);
+          console.log(response.data);
+        }).catch((err) => {
+          console.log('error fetching data:', err);
+        }).finally(() => {console.log('done fetching data')})
+      }
 
     return (
         <View style={styles.container}>
