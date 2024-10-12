@@ -6,12 +6,13 @@ import { Entypo, Fontisto, MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface ScheduleItemProps {
     scheduleItem: {
-        Course: string;
+        CourseName: string;
         Username: string;
         DayOfWeek:string;
         StartTime: string;
         EndTime: string;
         Room: string;
+        CourseID: string
     }
   }
 
@@ -47,7 +48,7 @@ const sheduleItem = ({scheduleItem} : ScheduleItemProps ) => {
                     <View style={styles.inscrollBadge}>
                         <Text style={styles.textInBadge}>{scheduleItem.DayOfWeek}</Text>
                     </View>
-                    <Text style={styles.inscrollText}>{scheduleItem.Room}</Text>
+                    <Text style={styles.inscrollText}>{scheduleItem.CourseID}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -75,7 +76,7 @@ const sheduleItem = ({scheduleItem} : ScheduleItemProps ) => {
                             </View>
                             <View>
                                 <Text style ={{bottom: 7, left: 40, fontSize: 15}}>
-                                    {scheduleItem.Course}
+                                    {scheduleItem.CourseName}
                                 </Text>
                             </View>
                         </View>

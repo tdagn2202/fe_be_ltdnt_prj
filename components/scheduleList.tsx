@@ -7,12 +7,13 @@ const getScheduleURL = `http://${IP.ipAddress}:5000/api/student/getSchedule`
 
 
 interface ScheduleItem {
-    Course: string;
+    CourseName: string;
     Username: string;
     DayOfWeek:string;
     StartTime: string;
     EndTime: string;
     Room: string;
+    CourseID: string
   }
 
 const scheduleList = () => {
