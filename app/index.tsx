@@ -1,54 +1,62 @@
 import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, Button, StyleSheet, Text, View, Image, ImageBackground, TextInput, Touchable, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Platform, Button, StyleSheet, Text, View, Image, ImageBackground, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import ToastNotification from './toastNotification';
 import { useState } from 'react';
 import axios from 'axios';
-import { createIconSetFromFontello } from '@expo/vector-icons';
-import Entypo from '@expo/vector-icons/Entypo';
-var IP = require('../ipAddress')
 import Feather from '@expo/vector-icons/Feather';
-export default function Login({  }) {
-  const navigation = useNavigation();
-  const [showNotify, setshowNotify] = useState(false)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [hide, setHide] = useState(true)
-  const loginAPI = `http://${IP.ipAddress}:5000/api/student/login`
-  const getAccountAPI = `http://${IP.ipAddress}:5000/api/student/`
-  const notifyStyle = "ABC"
-  const notifyContext = "XYZ"
-  
-  const NaviHome = () => {
-    router.navigate('/(tabs)')
-  }
 
+var IP = require('../ipAddress')
+
+
+
+
+export default function Login() {
+  const navigation = useNavigation();
+  const [showNotify1, setShowNotify1] = useState(false);
+  const [showNotify2, setShowNotify2] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [icon1, setIcon1] = useState<'filetext1' | 'checkcircleo' | 'question'>('filetext1');
+  const [icon2, setIcon2] = useState<'filetext1' | 'checkcircleo' | 'question'>('checkcircleo');
+  const [hide, setHide] = useState(true);
+  const loginAPI = `http://${IP.ipAddress}:5000/api/student/login`;
+
+  const NaviHome = () => {
+    router.navigate('/(tabs)');
+  }
 
   const handleLogin = async () => { 
     if(!username || !password){
-      console.log('Empty username or password')
-    } else {
+      setIcon1('filetext1');
+      setShowNotify1(true);
+      console.log('Empty username or password');
 
-    
-    console.log(`Logged in with ${username}, ${password}`);
-    
-    try {
-      const res = await axios.post(loginAPI, { username, password });
-      NaviHome();
-      console.log(`Successfully logged in`)
-      
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        if (err.response) {
-          setshowNotify(!showNotify);
+      setTimeout(() => {
+        setShowNotify1(false);
+      }, 2000);
+    } else {
+      try {
+        const res = await axios.post(loginAPI, { username, password });
+        setIcon2('checkcircleo');
+        setShowNotify2(true);
+
+        setTimeout(() => {
+          setShowNotify2(false);
+          NaviHome();
+        }, 2000);
+        console.log(`Successfully logged in`);
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          setIcon1('question');
+          setShowNotify1(true);
 
           setTimeout(() => {
-            setshowNotify(false)
-          }, 1000);
+            setShowNotify1(false);
+          }, 2000);
 
-          const status = err.response.status;
-          
+          const status = err.response ? err.response.status : null;
           switch (status) {
             case 404:
               console.log('User not found');
@@ -57,108 +65,63 @@ export default function Login({  }) {
               console.log('Incorrect username or password');
               break;
             default:
-              console.log('nothing');
+              console.log('An error occurred');
               break;
           }
         }
       }
     }
-  }
   };
-  
 
   return (
-    <KeyboardAvoidingView style={styles.container}
-      behavior='padding'
-      enabled={Platform.OS === 'ios'}
-      keyboardVerticalOffset={10}
-    >
-      
+    <KeyboardAvoidingView style={styles.container} behavior='padding' enabled={Platform.OS === 'ios'} keyboardVerticalOffset={10}>
       <View style={styles.container1}>
-        <ImageBackground
-          style={styles.image1}
-          // source={require("../data/General/background_banner.png")}
-            source={require("../assets/images/background_banner.png")}
-        >
-          <Text style={styles.text1}>       STUDENT
-            MANAGEMENT
-          </Text>
+        <ImageBackground style={styles.image1} source={require("../assets/images/background_banner.png")}>
+          <Text style={styles.text1}>      STUDENT 
+            MANAGEMENT</Text>
         </ImageBackground>
       </View>
 
       <View style={styles.container2}>
-
         <Text style={styles.text2}>LOGIN</Text>
         <TextInput 
-            style={styles.containertxt} 
-            placeholder='Enter your username' 
-            placeholderTextColor={'#d4d4d4'}
-            onChangeText = {(text)=> setUsername(text)
-            }/>
+          style={styles.containertxt} 
+          placeholder='Enter your username' 
+          placeholderTextColor={'#d4d4d4'}
+          onChangeText={setUsername}
+        />
+        <TextInput 
+          style={styles.containertxt} 
+          placeholder='Enter your password' 
+          placeholderTextColor={'#d4d4d4'}
+          onChangeText={setPassword}
+          secureTextEntry={hide}
+        />
+        <TouchableOpacity onPress={() => setHide(!hide)} style={{ bottom: 37, left: 120 }}>
+          <Text>{hide ? <Feather name="eye" size={20} color="grey" /> : <Feather name="eye-off" size={20} color="grey" />}</Text>
+        </TouchableOpacity>
 
-          <TextInput 
-            style={styles.containertxt} 
-            placeholder='Enter your password' 
-            placeholderTextColor={'#d4d4d4'}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry={hide}
-          />
-          {/* <TouchableOpacity>
-            <View style = {{position: 'absolute', bottom: 17, left: 110}}>
-              <Feather name="eye" size={19} color="grey" />
-            </View>
-          </TouchableOpacity> */}
-          <TouchableOpacity
-                        style={
-                          {
-                            bottom: 37,
-                            left: 120,
-                          }
-                        }
-                        onPress={() => {
-                            setHide(!hide)
-                        }}
-                    >
-                        <Text>{hide ? <Feather name="eye" size={20} color="grey" /> : <Feather name="eye-off" size={20} color="grey" />}</Text>
-                    </TouchableOpacity>
         <TouchableOpacity style={{ marginBottom: 30 }}>
           <Text style={styles.forgotPass}>I have forgot my password</Text>
         </TouchableOpacity>
 
-        {/* BUTTON LOGIN CODE AREA HERE */}
-
-        <TouchableOpacity style={styles.buttonLogin}
-          onPress={()=> router.navigate('/(tabs)')}
-          // onPress = {()=> handleLogin()}
-        >
+        <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>
         </TouchableOpacity>
-        {
-          showNotify && <ToastNotification icon= 'question' notifyStyle='Login failed' notifyContext='Negav ha?'/>
-        }
-        {/* {showNotify && 
-            <ToastNotification notifyStyle="Chấm hỏi" notifyContext="Mày Negav hả gì mà quên acc sinh viên?" />
-        } */}
-        {/* --------------------------------- */}
+
+        {showNotify1 && <ToastNotification icon={icon1} notifyStyle='Login failed' notifyContext='Tài khoản hoặc mật khẩu không hợp lệ' />}
+        {showNotify2 && <ToastNotification icon={icon2} notifyStyle='Login successful' notifyContext='+1 đrl' />}
 
         <View style={styles.line}></View>
 
-        <View style = {{alignItems: 'center', bottom: 25,}}>
+        <View style={{ alignItems: 'center', bottom: 25 }}>
           <View style={{ marginTop: 200 }}>
             <Text style={{ color: '#b1b1b1', fontWeight: 'bold', fontSize: 13 }}>New to us?</Text>
           </View>
 
-          {/* CODE FOR SIGN UP FOR A NEW ACCOUNT AREA  */}
-
-          <TouchableOpacity style={{ marginBottom: 30 }}
-            onPress={()=> router.navigate('/register')}
-          >
+          <TouchableOpacity style={{ marginBottom: 30 }} onPress={() => router.navigate('/register')}>
             <Text style={{ color: '#779dca', fontWeight: 'bold', fontSize: 15, textDecorationLine: 'underline' }}>Sign up a free account</Text>
           </TouchableOpacity>
-
-          {/* --------------------------------- */}
-          
-
         </View>
       </View>
     </KeyboardAvoidingView>

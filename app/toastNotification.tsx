@@ -6,7 +6,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 interface ToastProps {
   notifyStyle: string;
   notifyContext: string;
-  icon: 'question' | 'checkcircleo';
+  icon: 'question' | 'checkcircleo' | 'filetext1';
 }
 
 const ToastNotification = ({ icon, notifyStyle, notifyContext }: ToastProps) => {
