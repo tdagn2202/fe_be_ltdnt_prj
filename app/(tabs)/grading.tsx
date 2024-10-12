@@ -4,7 +4,7 @@ import React, { useEffect, useState,   } from 'react'
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createIconSetFromFontello } from '@expo/vector-icons';
-
+import ScheduleList from '@/components/scheduleList';
 var IP = require('../../ipAddress')
 
 const getDataURL = `http://${IP.ipAddress}:5000/api/student`
@@ -15,7 +15,9 @@ interface ScheduleItem {
   Course: string;
   Username: string;
   DayOfWeek:string;
-  // Add any other properties returned by the API
+  StartTime: string;
+  EndTime: string;
+  Room: string;
 }
 
 interface getDataItem {
@@ -62,14 +64,18 @@ const grading = () => {
         data={res}
         renderItem={({item}) => {
           return(
-            <View style = {{flexDirection:'row'}}>
-              <Text>{item.Course}</Text>
-              <Text>{item.DayOfWeek}</Text>
+            <View style = {{flexDirection:'row', padding: 3}}>
+              <Text style = {{paddingHorizontal: 3}}>{item.Course}</Text>
+              <Text style = {{paddingHorizontal: 3}}>{item.DayOfWeek}</Text>
+              <Text style = {{paddingHorizontal: 3}}>{item.StartTime}</Text>
+              <Text style = {{paddingHorizontal: 3}}>{item.EndTime}</Text>
+              <Text style = {{paddingHorizontal: 3}}>{item.Room}</Text>
             </View>
           )
         }}
         
       />
+      <ScheduleList />
     </SafeAreaView>
   )
 }

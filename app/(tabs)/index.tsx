@@ -1,11 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useRef, useEffect } from 'react';
-import { Button, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Modal, Animated } from 'react-native';
+import { Button, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Modal, Animated, FlatList } from 'react-native';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import axios from 'axios';
+import SheduleItem from '../../components/sheduleItem'
+import ScheduleList from '@/components/scheduleList';
+
 var IP = require('../../ipAddress')
 const getScheduleURL = `http://${IP.ipAddress}:5000/api/student/getSchedule`
 interface ScheduleItem {
@@ -69,8 +72,8 @@ export default function Home() {
                 <View style={styles.homedetail}>
                     <View style={styles.schedule}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#5c5c5c', marginVertical: 10, marginLeft: 12 }}>Schedule</Text>
-                        <ScrollView horizontal={true}>
-                            <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        {/* <ScrollView horizontal={true}> */}
+                            {/* <TouchableOpacity onPress={() => setModalVisible(true)}>
                                 <View style={styles.scroll}>
                                     <View style={styles.inscroll}>
                                         <View style={styles.inscrollBadge}>
@@ -79,10 +82,10 @@ export default function Home() {
                                         <Text style={styles.inscrollText}>CT110H</Text>
                                     </View>
                                 </View>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
 
                             {/* Modal */}
-                            <Modal
+                            {/* <Modal
                                 visible={modalVisible}
                                 animationType='slide'
                                 transparent={true} 
@@ -90,12 +93,13 @@ export default function Home() {
                                     setModalVisible(false);
                                 }}
                             >
-                                {/* Animated background for fade effect */}
+                               
                                 <Animated.View style={[styles.modalBackground, { opacity: fadeAnim }]} />
                                 
                                 <View style={styles.modalContainer}>
                                     <View style={styles.modalContent}>
                                         <Text style={styles.modalTitle}>Chi tiết thời khóa biểu</Text>
+                                        
                                         <View style ={{top: -9}}>
                                             <View style = {{flexDirection: 'row'}}>
                                                 <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 100}]}>
@@ -108,6 +112,7 @@ export default function Home() {
                                                     </Text>
                                                 </View>
                                             </View>
+                                            
                                             <View style = {{flexDirection: 'row'}}>
                                                 <View style = {[styles.modalLessionBadge, {marginTop: 7, width: 80}]}>
                                                     <MaterialCommunityIcons name="calendar-week-begin" size={17} color="white" style ={{right: 3}} />
@@ -166,10 +171,13 @@ export default function Home() {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                            </Modal>
+                            </Modal> */}
+                            {/* <SheduleItem /> */}
+                            <ScheduleList />
+                            
 
                             {/* Add more scroll items if needed */}
-                            <View style={styles.scroll}>
+                            {/* <View style={styles.scroll}>
                                 <View style={styles.inscroll}></View>
                             </View>
                             <View style={styles.scroll}>
@@ -177,8 +185,8 @@ export default function Home() {
                             </View>
                             <View style={styles.scroll}>
                                 <View style={styles.inscroll}></View>
-                            </View>
-                        </ScrollView>
+                            </View> */}
+                        {/* </ScrollView> */}
                     </View>
 
                     <View style={styles.map}>
