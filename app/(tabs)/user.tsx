@@ -2,9 +2,10 @@ import { router, useNavigation, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { useNavigationState, useRoute } from '@react-navigation/native';
-import { Button, StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
+import { Button, StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, FlatList, FlatListComponent } from 'react-native';
 import axios from 'axios';
 import {  } from 'react-native-gesture-handler';
+import userImageMap from '../../assets/images/avatars/imgMap'
 var IP = require('../../ipAddress')
 const getStudenInformationURL = `http://${IP.ipAddress}:5000/api/student/getStudentInformation`
 
@@ -15,13 +16,14 @@ interface StudentInformationProps{
     Email: string;
     Address: string;
     PhoneNumber: string;
+    imgUrl: string;
 }
 
 export default function HomeUser({}) {
     const router = useRouter();
-    const [data, setData] = useState('B2203551')
+    const [data, setData] = useState('B2203565')
     const [res, setRes] = useState<StudentInformationProps[]>([]);
-
+    const [studentData, setStudentData] = useState<StudentInformationProps | null>(null);
 
     const truncateEmail = (email: string, maxLength: number) => {
         if (email.length > maxLength) {
@@ -32,30 +34,27 @@ export default function HomeUser({}) {
         }
         return email;
     }
-    
+     
 
     const getDataHandler = async () => {
         console.log('accessed');
-        
-        axios.post(getStudenInformationURL, {
-          Username: data,
-        }).then((response) => {
-          setRes(response.data);
-          console.log(response.data);
-        }).catch((err) => {
-          console.log('error fetching data:', err);
-        }).finally(() => {console.log('done fetching data')})
-      }
+        try {
+            const response = await axios.post(getStudenInformationURL, {
+              Username: data,
+            });
+            setRes(response.data);
+            console.log('Fetched data: ', response.data);
+            } catch(err) {
+              console.log('error fetching data:', err);
+            } finally { console.log('done fetching data') }
+        }
 
-
-    const loadData = async () => {
-
-    }
 
     useEffect(() => {
-
         getDataHandler();
+        
     }, [])
+
 
 
     const goToIndex = () => {
@@ -65,22 +64,38 @@ export default function HomeUser({}) {
     return (
         <View style={styles.container}>
             <View style={styles.container1}>
-                <ImageBackground
-                    style={[styles.image1, {top: -6}]}
-                    source={require("../../assets/images/background_banner.png")}
-                >
-                  <Image
-                        style={styles.image2}
-                        source={require("../../assets/images/meliodas.png")}
+                    <ImageBackground
+                        style={[styles.image1, {top: -6}]}
+                        source={require("../../assets/images/background_banner.png")}
+                    >
+                    <FlatList
+                        data = {res}
+                        renderItem={({item}) => {
+                            console.log("img url: "+item.imgUrl)
+                            return (
+                                <View style = {{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                                    <View style = {{ alignItems: 'center', justifyContent: 'center', flex:1, top: 85}}>
+                                        <Image
+                                                style={styles.image2}
+                                                // source={{uri: "https://scontent.fvca1-4.fna.fbcdn.net/v/t39.30808-6/462809129_2037076000142152_1698289816652019400_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFM24uK40BCuKbjCwtHwr9FdksfgRlCcH52Sx-BGUJwfuR6tOFTQkj057KKpd2VlGiielqtLF-sGpEa1ZBXwHWh&_nc_ohc=3T289FoCDIcQ7kNvgENwqwP&_nc_zt=23&_nc_ht=scontent.fvca1-4.fna&_nc_gid=A5c49ZSNIagRT0eIEE-Ev3e&oh=00_AYBKSlwVyU8tNKmDJx9OcccyJTlEbP86f2fPZXTqdiuIBQ&oe=6711A72C"}}
+                                                source={{ uri: userImageMap[item.StudentID] }}
+                                                // source={require('../../assets/images/avatars/dang.jpg')}
+                                        />
+                                        <View style = {{}} >
+                                            <View style ={{ top: 13, justifyContent:'center', alignItems: 'center'}}>
+                                                <Text style={styles.username}>{item.Name}</Text>
+                                                <View style={styles.roleuser}>
+                                                    <Text style={styles.txtrole}>Student</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            )
+                             
+                        }}
                     />
-                  <View style = {{bottom: 10}} >
-                    
-                    <Text style={styles.username}>Minh Man</Text>
-                    <View style={styles.roleuser}>
-                        <Text style={styles.txtrole}>Student</Text>
-                    </View>
-                  </View>
-                </ImageBackground>
+                    </ImageBackground>
             </View>
             <View style={styles.container2}>
                 <View style={styles.detail1}>
@@ -131,7 +146,7 @@ export default function HomeUser({}) {
                         <View style={styles.icon}>
                         <Image
                                 style={styles.imageicon}
-                                source={require("../../assets/images/settings.png")}
+                                source={require(`../../assets/images/settings.png`)}
                             />
                         </View>
                         <Text style={styles.txticon}>Account setting</Text>
@@ -195,18 +210,18 @@ const styles = StyleSheet.create({
     },
 
     image2: {
-        width: "17.5%",
-        height: "31.5%",
+        height: 90,
+        width: 90,
         borderRadius: 100,
-        marginTop: 50,
-
+        borderWidth: 3,
+        top: 7,
+        borderColor: '#ffffff'
     },
 
     username: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white',
-        marginTop: 17
     },
 
     roleuser: {
