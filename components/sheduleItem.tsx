@@ -50,6 +50,14 @@ const sheduleItem = ({scheduleItem} : ScheduleItemProps ) => {
                     </View>
                     <Text style={styles.inscrollText}>{scheduleItem.CourseID}</Text>
                 </View>
+                    <Text
+                        style = {{
+                            fontWeight: 'bold',
+                            textAlign: 'center',                            
+                            padding: 5,
+                            paddingTop: 30,
+                        }}
+                    >{scheduleItem.CourseName}</Text>
             </View>
         </TouchableOpacity>
 

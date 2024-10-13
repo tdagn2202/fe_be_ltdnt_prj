@@ -1,15 +1,66 @@
 import { router, useNavigation, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useState, useEffect } from 'react';
 import { useNavigationState, useRoute } from '@react-navigation/native';
-import { Button, StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
+import axios from 'axios';
+import {  } from 'react-native-gesture-handler';
+var IP = require('../../ipAddress')
+const getStudenInformationURL = `http://${IP.ipAddress}:5000/api/student/getStudentInformation`
 
-
+interface StudentInformationProps{
+    Name: string;
+    CourseYear: string;
+    StudentID: string;
+    Email: string;
+    Address: string;
+    PhoneNumber: string;
+}
 
 export default function HomeUser({}) {
     const router = useRouter();
+    const [data, setData] = useState('B2203551')
+    const [res, setRes] = useState<StudentInformationProps[]>([]);
+
+
+    const truncateEmail = (email: string, maxLength: number) => {
+        if (email.length > maxLength) {
+            const splitEmail = email.split("@");
+            const usernamePart = splitEmail[0];
+            const domainPart = splitEmail[1];
+            return `${usernamePart}@${domainPart.slice(0, 1)}...`;
+        }
+        return email;
+    }
+    
+
+    const getDataHandler = async () => {
+        console.log('accessed');
+        
+        axios.post(getStudenInformationURL, {
+          Username: data,
+        }).then((response) => {
+          setRes(response.data);
+          console.log(response.data);
+        }).catch((err) => {
+          console.log('error fetching data:', err);
+        }).finally(() => {console.log('done fetching data')})
+      }
+
+
+    const loadData = async () => {
+
+    }
+
+    useEffect(() => {
+
+        getDataHandler();
+    }, [])
+
 
     const goToIndex = () => {
-        router.push('/homeShow');
+        // router.push('/homeShow');
+        console.log('abc')
     }
     return (
         <View style={styles.container}>
@@ -37,20 +88,27 @@ export default function HomeUser({}) {
                         <View style={styles.viewtxt}>
                             <Text style={styles.txt}>Name</Text>
                             <Text style={styles.txt}>Course</Text>
-                            <Text style={styles.txt}>Student code</Text>
+                            <Text style={styles.txt}>StudentID</Text>
                             <Text style={styles.txt}>Email</Text>
                             <Text style={styles.txt}>Address</Text>
                             <Text style={styles.txt}>Phone</Text>
                         </View>
-                        <View style={styles.viewttsv}>
-                            <Text style={styles.ttsv}>Truong Minh Man</Text>
-                            <Text style={styles.ttsv}>K48</Text>
-                            <Text style={styles.ttsv}>B2203565</Text>
-                            <Text style={styles.ttsv}>manb2203565@student...</Text>
-                            <Text style={styles.ttsv}>Dam Doi, Ca Mau</Text>
-                            <Text style={styles.ttsv}>0912404...</Text>
-
-                        </View>
+                        <FlatList
+                            data={res}
+                            renderItem={({item}) => {
+                                return (
+                                <View style={[styles.viewttsv]}>
+                                    <Text style={styles.ttsv}>{item.Name}</Text>
+                                    <Text style={styles.ttsv}>{item.CourseYear}</Text>
+                                    <Text style={styles.ttsv}>{item.StudentID}</Text>
+                                    <Text style={[styles.ttsv, { flexWrap: 'wrap' }]}>{truncateEmail(item.Email, 10)}</Text>
+                                    <Text style={styles.ttsv}>{item.Address}</Text>
+                                    <Text style={styles.ttsv}>{item.PhoneNumber}</Text>
+                                </View>
+                                )
+                            }}
+                        >
+                        </FlatList>
                     </View>
                 </View>
 
@@ -244,21 +302,26 @@ const styles = StyleSheet.create({
 
     viewtxt:{
         flex: 1,
-        marginLeft: 40,
+        marginLeft: 30,
         justifyContent: 'center',
     },
 
     viewttsv: {
         flex: 2,
         justifyContent: 'center',
-        marginLeft: 20,
+        marginLeft: 10,
+        top: 10.5,
+        width: '60%',
+        fontSize: 14,
     },
     
     txt: {
+        
         fontSize: 15,
         fontWeight: 'bold',
         color: '#555555',
-        marginVertical: 5,
+        width: 100,
+        marginVertical: 5
     },
 
     ttsv: {

@@ -55,15 +55,15 @@ export default function Home() {
     return (
         <View style={styles.container}>
             <View style={styles.container1}>
-                <View style={styles.img}>
+                <View style={[styles.img, {bottom: 4}]}>
                     <Image
                         style={styles.image1}
                         source={require("../../assets/images/meliodas.png")}
                     />
                 </View>
                 <View style={styles.txt}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#3d70af' }}>Welcome</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Minh Man</Text>
+                    <Text style={{ right:10, fontSize: 20, fontWeight: 'bold', color: '#3d70af' }}>Welcome</Text>
+                    <Text style={{ right:10, fontSize: 20, fontWeight: 'bold', color: 'black' }}>Minh Man</Text>
                 </View>
             </View>
 

@@ -6,7 +6,7 @@ import ToastNotification from './toastNotification';
 import { useState } from 'react';
 import axios from 'axios';
 import Feather from '@expo/vector-icons/Feather';
-
+import User  from './(tabs)/user'
 var IP = require('../ipAddress')
 
 
@@ -105,7 +105,12 @@ export default function Login() {
           <Text style={styles.forgotPass}>I have forgot my password</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
+        <TouchableOpacity 
+          style={styles.buttonLogin} 
+          // onPress={handleLogin}
+          onPress={() => router.navigate('/(tabs)')}
+          >
+
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>
         </TouchableOpacity>
 
