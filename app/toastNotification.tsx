@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import Animated, { FadeOutUp, SlideInUp } from 'react-native-reanimated';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { BlurView } from 'expo-blur';
 
 interface ToastProps {
   notifyStyle: string;
@@ -11,12 +12,12 @@ interface ToastProps {
 
 const ToastNotification = ({ icon, notifyStyle, notifyContext }: ToastProps) => {
   return (
-    <Animated.View 
+    <Animated.View
       entering={SlideInUp}
       exiting={FadeOutUp}
       style={styles.toastContainer}
     >
-      <View style={styles.toastBox}>
+      <BlurView intensity={50} tint="extraLight" style={styles.toastBox}>
         <View style={styles.iconContainer}>
           <AntDesign name={icon} size={25} color="white" />
         </View>
@@ -24,7 +25,7 @@ const ToastNotification = ({ icon, notifyStyle, notifyContext }: ToastProps) => 
           <Text style={styles.notifyStyleText}>{notifyStyle}</Text>
           <Text>{notifyContext}</Text>
         </View>
-      </View>
+      </BlurView>
     </Animated.View>
   );
 };
@@ -43,18 +44,19 @@ const styles = StyleSheet.create({
     height: 60,
     width: 300,
     borderRadius: 50,
-    backgroundColor: 'rgba(245, 245, 245, 0.8)', // Semi-transparent background
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
+    overflow: 'hidden', // Ensure the blur effect respects the border radius
+    // Optional: Add shadow for better visibility
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1, // Lighter shadow for transparency
+    shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 3, // Lower elevation for a subtle shadow effect
+    elevation: 5, // For Android shadow
   },
   iconContainer: {
     height: 50,
@@ -73,6 +75,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
 
 export default ToastNotification;
