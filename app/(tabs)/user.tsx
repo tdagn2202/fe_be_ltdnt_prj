@@ -6,6 +6,7 @@ import { Button, StyleSheet, Text, View, Image, ImageBackground, TouchableOpacit
 import axios from 'axios';
 import {  } from 'react-native-gesture-handler';
 import userImageMap from '../../assets/images/avatars/imgMap'
+import { useUser } from '@/components/context';
 var IP = require('../../ipAddress')
 const getStudenInformationURL = `http://${IP.ipAddress}:5000/api/student/getStudentInformation`
 
@@ -20,11 +21,11 @@ interface StudentInformationProps{
 }
 
 export default function HomeUser({}) {
+    const {username} = useUser();
     const router = useRouter();
-    const [data, setData] = useState('B2203565')
+    const [data, setData] = useState(username)
     const [res, setRes] = useState<StudentInformationProps[]>([]);
     const [studentData, setStudentData] = useState<StudentInformationProps | null>(null);
-
     const truncateEmail = (email: string, maxLength: number) => {
         if (email.length > maxLength) {
             const splitEmail = email.split("@");
@@ -38,6 +39,7 @@ export default function HomeUser({}) {
 
     const getDataHandler = async () => {
         console.log('accessed');
+        console.log(`Username: ${username}`)
         try {
             const response = await axios.post(getStudenInformationURL, {
               Username: data,
@@ -77,9 +79,7 @@ export default function HomeUser({}) {
                                     <View style = {{ alignItems: 'center', justifyContent: 'center', flex:1, top: 85}}>
                                         <Image
                                                 style={styles.image2}
-                                                // source={{uri: "https://scontent.fvca1-4.fna.fbcdn.net/v/t39.30808-6/462809129_2037076000142152_1698289816652019400_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFM24uK40BCuKbjCwtHwr9FdksfgRlCcH52Sx-BGUJwfuR6tOFTQkj057KKpd2VlGiielqtLF-sGpEa1ZBXwHWh&_nc_ohc=3T289FoCDIcQ7kNvgENwqwP&_nc_zt=23&_nc_ht=scontent.fvca1-4.fna&_nc_gid=A5c49ZSNIagRT0eIEE-Ev3e&oh=00_AYBKSlwVyU8tNKmDJx9OcccyJTlEbP86f2fPZXTqdiuIBQ&oe=6711A72C"}}
                                                 source={{ uri: userImageMap[item.StudentID] }}
-                                                // source={require('../../assets/images/avatars/dang.jpg')}
                                         />
                                         <View style = {{}} >
                                             <View style ={{ top: 13, justifyContent:'center', alignItems: 'center'}}>

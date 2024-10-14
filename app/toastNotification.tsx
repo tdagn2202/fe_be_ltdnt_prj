@@ -43,25 +43,24 @@ const styles = StyleSheet.create({
     height: 60,
     width: 300,
     borderRadius: 50,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: 'rgba(245, 245, 245, 0.8)', // Semi-transparent background
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    // Optional: Add shadow for better visibility
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.1, // Lighter shadow for transparency
     shadowRadius: 3.84,
-    elevation: 5, // For Android shadow
+    elevation: 3, // Lower elevation for a subtle shadow effect
   },
   iconContainer: {
     height: 50,
     width: 50,
     borderRadius: 50,
-    backgroundColor: '#12469a',
+    backgroundColor: 'rgba(18, 70, 154, 0.8)', // Semi-transparent icon background
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
@@ -74,5 +73,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
 
 export default ToastNotification;

@@ -8,21 +8,31 @@ import Entypo from '@expo/vector-icons/Entypo';
 import axios from 'axios';
 import SheduleItem from '../../components/sheduleItem'
 import ScheduleList from '@/components/scheduleList';
-
+import { useUser } from '@/components/context';
+import userImageMap from '@/assets/images/avatars/imgMap';
 var IP = require('../../ipAddress')
 const getScheduleURL = `http://${IP.ipAddress}:5000/api/student/getSchedule`
+const getStudenInformationURL = `http://${IP.ipAddress}:5000/api/student/getStudentInformation`
+
 interface ScheduleItem {
-    Course: string;
+    CourseName: string;
     Username: string;
-    DayOfWeek:string;
-  }
+    DayOfWeek: string;
+    StartTime: string;
+    EndTime: string;
+    Room: string;
+    CourseID: string;
+    Name: string
+}
+
 
 export default function Home() {
+    const { username } = useUser();
     const [res, setRes] = useState<ScheduleItem[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial opacity for background
-    const fadeAnim2 = useRef (new Animated.Value(1)).current; //)
-    const [data, setData] = useState('B2203551')
+    const fadeAnim2 = useRef(new Animated.Value(1)).current; //)
+    // const [data, setData] = useState('B2203551')
     useEffect(() => {
         if (modalVisible) {
             Animated.timing(fadeAnim, {
@@ -41,29 +51,44 @@ export default function Home() {
 
     const getDataHandler = async () => {
         console.log('accessed');
-        
-        axios.post(getScheduleURL, {
-          Username: data,
-        }).then((response) => {
-          setRes(response.data);
-          console.log(response.data);
-        }).catch((err) => {
-          console.log('error fetching data:', err);
-        }).finally(() => {console.log('done fetching data')})
-      }
+        try {
+            const response = await axios.post(getStudenInformationURL, {
+                Username: username,
+            });
+            setRes(response.data);
+            console.log('Fetched data: ', response.data);
+        } catch (err) {
+            console.log('error fetching data:', err);
+        } finally { console.log('done fetching data') }
+    }
+
+    useEffect(() => {
+        getDataHandler();
+    }, [])
 
     return (
         <View style={styles.container}>
             <View style={styles.container1}>
-                <View style={[styles.img, {bottom: 4}]}>
+                <View style={[styles.img, { bottom: 4 }]}>
                     <Image
-                        style={styles.image1}
-                        source={require("../../assets/images/meliodas.png")}
+                        style={styles.image2}
+                        source={{ uri: userImageMap[username] }}
                     />
                 </View>
-                <View style={styles.txt}>
-                    <Text style={{ right:10, fontSize: 20, fontWeight: 'bold', color: '#3d70af' }}>Welcome</Text>
-                    <Text style={{ right:10, fontSize: 20, fontWeight: 'bold', color: 'black' }}>Minh Man</Text>
+                <View style={[styles.txt, { top: 30, right: 10 }]}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#3d70af' }}>Welcome</Text>
+                    <FlatList
+                        data={res}
+                        renderItem={({ item }) => {
+                            console.log(item.Name)
+                            return (
+                                <View>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>{item.Name}</Text>
+                                </View>
+                            )
+                        }}
+                    />
+
                 </View>
             </View>
 
@@ -225,8 +250,8 @@ const styles = StyleSheet.create({
         left: 25,
         bottom: 20,
         flexDirection: 'row'
-    }, 
-    modalCancelButton : {
+    },
+    modalCancelButton: {
         backgroundColor: '#12469a',
         borderRadius: 15,
         height: 30,
@@ -234,5 +259,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 20
-    }
+    },
+    image2: {
+        height: 80,
+        width: 80,
+        borderRadius: 100,
+        borderWidth: 3,
+        left: 30,
+        top: 46.5,
+        borderColor: '#ffffff'
+    },
 });

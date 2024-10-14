@@ -7,6 +7,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Feather from '@expo/vector-icons/Feather';
 import User  from './(tabs)/user'
+import { useUser } from '@/components/context';
 var IP = require('../ipAddress')
 
 
@@ -16,7 +17,8 @@ export default function Login() {
   const navigation = useNavigation();
   const [showNotify1, setShowNotify1] = useState(false);
   const [showNotify2, setShowNotify2] = useState(false);
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
+  const {username, setUsername} = useUser();
   const [password, setPassword] = useState('');
   const [icon1, setIcon1] = useState<'filetext1' | 'checkcircleo' | 'question'>('filetext1');
   const [icon2, setIcon2] = useState<'filetext1' | 'checkcircleo' | 'question'>('checkcircleo');
@@ -26,7 +28,7 @@ export default function Login() {
   const NaviHome = () => {
     router.navigate('/(tabs)');
   }
-
+  
   const handleLogin = async () => { 
     if(!username || !password){
       setIcon1('filetext1');
@@ -46,6 +48,7 @@ export default function Login() {
           setShowNotify2(false);
           NaviHome();
         }, 2000);
+        
         console.log(`Successfully logged in`);
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -107,8 +110,8 @@ export default function Login() {
 
         <TouchableOpacity 
           style={styles.buttonLogin} 
-          // onPress={handleLogin}
-          onPress={() => router.navigate('/(tabs)')}
+          onPress={handleLogin}
+          // onPress={() => router.navigate('/(tabs)')}
           >
 
           <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 17 }}>Login</Text>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 var IP = require('../ipAddress')
 import ScheduleItem from './sheduleItem'
+import { useUser } from './context'
 const getScheduleURL = `http://${IP.ipAddress}:5000/api/student/getSchedule`
 
 
@@ -17,7 +18,8 @@ interface ScheduleItem {
   }
 
 const scheduleList = () => {
-    const [data, setData] = useState('B2203551')
+    const { username } = useUser()
+    const [data, setData] = useState(username)
     const [res, setRes] = useState<ScheduleItem[]>([]);
     const getDataHandler = async () => {
         console.log('accessed');
